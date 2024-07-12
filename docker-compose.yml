@@ -1,0 +1,31 @@
+version: '3.2'
+
+services:
+  api:
+    container_name: api
+    build: ./api
+    environment:
+      - PORT=8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    networks:
+      - blog
+  database:
+    container_name: mysql
+    image: mysql:8.0.33
+    environment:
+      - MYSQL_DATABASE=blog
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=123
+      - MYSQL_ROOT_PASSWORD=123
+    ports:
+      - 3305:3306
+    networks:
+      - blog
+    volumes:
+      - ./api/db/init.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+networks:
+  blog: 
+    driver: bridge

@@ -1,0 +1,13 @@
+from node:22-alpine3.19
+
+workdir /api
+
+copy package.json .
+
+run yarn install
+
+copy . .
+
+expose 8080
+
+cmd [ "yarn", "nodemon"]
