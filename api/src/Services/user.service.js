@@ -21,6 +21,7 @@ const userServices = {
       }
     })
   },
+  
   read: (data)=>{
     return new Promise((resolve, reject)=>{
       db.query("Select username, email from User where id = (?)", [data], (erro, results)=>{
@@ -34,6 +35,7 @@ const userServices = {
       })
     })
   },
+
   list: ()=>{
     return new Promise((resolve, reject)=>{
       db.query("Select username, email from User", (err, results)=>{
@@ -42,24 +44,31 @@ const userServices = {
       })
     })
   },
+
   update: (data)=>{
-    const query = "Update User set"
+    let query = "Update User set"
     const dataArray = []
     if(data.username){
       query += " username = (?)"
       dataArray.push(data.username)
     }
     if(data.email){
-      query += " email = (?)"
+      if(query.endsWith(")")){
+        query += ","
+      }
+      query += " email = (?),"
       dataArray.push(data.email)
     }
     if(data.password){
+      if(query.endsWith(")")){
+        query += ","
+      }
       const hash = bcrypt.hashSync(data.password, saltRounds)
       query += " password = (?)"
-      dataArray.push(password)
+      dataArray.push(hash)
     }
     query += " where id = (?);"
-    dataArray.push(id)
+    dataArray.push(data.id)
     return new Promise((resolve, reject)=>
       db.query(query, dataArray, (error, results)=>{
         if(error){reject(error);return}
@@ -67,6 +76,7 @@ const userServices = {
       })
     )
   },
+
   delete: (id)=>{
     return new Promise((resolve, reject)=>
       db.query("Delete from User where id = (?)", [id],(error, results)=>{

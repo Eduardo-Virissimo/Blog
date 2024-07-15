@@ -51,4 +51,16 @@ userController.delete("/:id", async(req,res)=>{
     .json(e)
   })
 })
+userController.put("/", async(req,res)=>{
+  const data = req.body
+  await userService.update(data).then(r=>{
+    res
+    .status(200)
+    .json(r)
+  }).catch(e=>{
+    res
+    .status(400)
+    .json(e)
+  })
+})
 export default userController;
