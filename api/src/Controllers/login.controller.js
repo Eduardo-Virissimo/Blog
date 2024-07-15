@@ -3,6 +3,7 @@ import loginServices from "../Services/login.service.js"
 import dayjs from "dayjs"
 
 const loginController = express.Router()
+
 loginController.post("/", async(req,res)=>{
   const data = req.body
   const date = dayjs()
@@ -12,15 +13,17 @@ loginController.post("/", async(req,res)=>{
     expires: date.add(10, "hours").toDate(),
     secure: true
   }
+
   await loginServices.login(data).then(r=>{
     res
     .cookie("token", r, cookieOptions)
-    .json({message: "usuário logado com sucesso"})
-  }).catch(e=>{
+    .json({message: "usuário logado com sucesso"  
+    })}).catch(e=>{
     res
     .status(400)
     .json({e})
   })
+
 })
 
 export default loginController
