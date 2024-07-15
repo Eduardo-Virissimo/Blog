@@ -5,6 +5,9 @@ services:
     container_name: api
     build: ./api
     environment:
+      - MYSQL_PASSWORD=123
+      - MYSQL_USER=admin
+      - MYSQL_HOST=mysql
       - PORT=8080
     ports:
       - 8080:8080
@@ -12,20 +15,29 @@ services:
       - database
     networks:
       - blog
+    volumes:
+      - ./api:/api
   database:
     container_name: mysql
-    image: mysql:8.0.33
+    hostname: mysql
+    image: mysql:5.7
+    command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--innodb_monitor_enable=all", "--max-connections=1001"]
     environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=123
       - MYSQL_DATABASE=blog
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=123
-      - MYSQL_ROOT_PASSWORD=123
     ports:
       - 3305:3306
+      - 33050:33060
     networks:
       - blog
+    expose:
+      - 3305
     volumes:
-      - ./api/db/init.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - ./api/src/db/init.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
 networks:
-  blog: 
+  blog:
     driver: bridge

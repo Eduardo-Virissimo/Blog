@@ -1,13 +1,18 @@
+ALTER USER 'admin'@'%' IDENTIFIED WITH mysql_native_password BY '123';
+FLUSH PRIVILEGES;
+
 create database if not exists blog;
 
-create table if not exists User (
-  id  int not null,
+use blog;
+
+create table User (
+  id  int not null auto_increment,
   username varchar(60) not null,
   email varchar(60) not null,
   password varchar(80) not null,
   primary key (id)
 );
-create table if not exists Post (
+create table Post (
   id int not null auto_increment ,
   tittle varchar(60),
   content text,
