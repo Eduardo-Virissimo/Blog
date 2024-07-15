@@ -3,13 +3,11 @@ import bcrypt from "bcryptjs"
 import dotenv from "dotenv"
 
 dotenv.config()
-const saltRounds = Number(process.env.SALT_ROUNDS
+const saltRounds = Number(process.env.SALT_ROUNDS)
 
-)
 const userServices = {
-  create: (data)=>{
 
-    
+  create: (data)=>{
     return new Promise((resolve, reject)=>{
       if(data.password && data.email && data.username){
         const hash = bcrypt.hashSync(data.password, saltRounds)
@@ -24,7 +22,7 @@ const userServices = {
   
   read: (data)=>{
     return new Promise((resolve, reject)=>{
-      db.query("Select username, email from User where id = (?)", [data], (erro, results)=>{
+      db.query("Select id, username, email from User where id = ?", [data], (erro, results)=>{
         if(erro){reject(erro);return}
         if(results[0]){
           resolve({message: "Usuário encontrado", results: results[0]});return
@@ -38,41 +36,39 @@ const userServices = {
 
   list: ()=>{
     return new Promise((resolve, reject)=>{
-      db.query("Select username, email from User", (err, results)=>{
+      db.query("Select id, username, email from User", (err, results)=>{
         if(err){reject(err);return}
         resolve({message: "Usuário encontrado", results})
       })
     })
   },
-
-  update: (data)=>{
-    let query = "Update User set"
+ 
+  update: (data) => {
+    let query = "UPDATE User SET"
     const dataArray = []
-    if(data.username){
-      query += " username = (?)"
+    
+    if (data.username) {
+      query += " username = ?,"
       dataArray.push(data.username)
     }
-    if(data.email){
-      if(query.endsWith(")")){
-        query += ","
-      }
-      query += " email = (?),"
+    if (data.email) {
+      query += " email = ?,"
       dataArray.push(data.email)
     }
-    if(data.password){
-      if(query.endsWith(")")){
-        query += ","
-      }
+    if (data.password) {
       const hash = bcrypt.hashSync(data.password, saltRounds)
-      query += " password = (?)"
+      query += " password = ?,"
       dataArray.push(hash)
     }
-    query += " where id = (?);"
+    // Remover a última vírgula e adicionar WHERE id = ?
+    query = query.slice(0, -1)
+    query += " WHERE id = ?;"
     dataArray.push(data.id)
-    return new Promise((resolve, reject)=>
-      db.query(query, dataArray, (error, results)=>{
-        if(error){reject(error);return}
-        resolve({message: "Usuário encontrado", results})
+
+    return new Promise((resolve, reject) =>
+      db.query(query, dataArray, (error, results) => {
+        if (error) { reject(error); return }
+        resolve({ message: "Usuário atualizado com sucesso", results })
       })
     )
   },
