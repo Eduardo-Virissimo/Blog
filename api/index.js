@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import db from "./src/db/db.js"
 import router from "./router.js"
+import { cookieParser } from "@tinyhttp/cookie-parser"
 dotenv.config()
 
 
@@ -10,6 +11,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
 
 app.use(router)
 

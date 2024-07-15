@@ -2,6 +2,24 @@
 # yarn lockfile v1
 
 
+"@tinyhttp/cookie-parser@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@tinyhttp/cookie-parser/-/cookie-parser-2.0.6.tgz#1e52d4f0d28509e5486f9d16f0fd77d912e38f2d"
+  integrity sha512-hLcFr3ml6MBU71URUutvzh8p0PgqGpmTMcorUrRS+Fck0/q3tzScE+ghhocgIoSx/F6GRtS/TYJkJrjL/ickBw==
+  dependencies:
+    "@tinyhttp/cookie" ">=2"
+    "@tinyhttp/cookie-signature" ">=2"
+
+"@tinyhttp/cookie-signature@>=2":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@tinyhttp/cookie-signature/-/cookie-signature-2.1.1.tgz#ae2caad6aec4ec51d42e7d852ae34a04196d5138"
+  integrity sha512-VDsSMY5OJfQJIAtUgeQYhqMPSZptehFSfvEEtxr+4nldPA8IImlp3QVcOVuK985g4AFR4Hl1sCbWCXoqBnVWnw==
+
+"@tinyhttp/cookie@>=2":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@tinyhttp/cookie/-/cookie-2.1.1.tgz#50ad664f732357a466a14cdc888e88e80dc3440e"
+  integrity sha512-h/kL9jY0e0Dvad+/QU3efKZww0aTvZJslaHj3JTPmIPC9Oan9+kYqmh3M6L5JUQRuTJYFK2nzgL2iJtH2S+6dA==
+
 accepts@~1.3.8:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.8.tgz#0bf0be125b67014adcb0b0921e62db7bffe16b2e"
@@ -151,6 +169,11 @@ cors@^2.8.5:
   dependencies:
     object-assign "^4"
     vary "^1"
+
+dayjs@^1.11.11:
+  version "1.11.11"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.11.tgz#dfe0e9d54c5f8b68ccf8ca5f72ac603e7e5ed59e"
+  integrity sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==
 
 debug@2.6.9:
   version "2.6.9"

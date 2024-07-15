@@ -8,7 +8,7 @@ use blog;
 create table User (
   id  int not null auto_increment,
   username varchar(60) not null,
-  email varchar(60) not null,
+  email varchar(60) not null unique,
   password varchar(80) not null,
   primary key (id)
 );
