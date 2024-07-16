@@ -2,8 +2,9 @@ import express from "express"
 import db from "../db/db.js"
 import userService from "../Services/user.service.js"
 const userController = express.Router()
+import auth from "../Middlewares/auth.js"
 
-userController.post("/", async (req,res)=>{
+userController.post("/",async (req,res)=>{
   const data = req.body
   await userService.create(data).then(results=>{
     res
@@ -28,7 +29,7 @@ userController.get("/:id", async(req,res)=>{
     .json(e)
   })
 })
-userController.get("/", async(req,res)=>{
+userController.get("/",auth ,async(req,res)=>{
   await userService.list().then((response)=>{
     res
     .status(200)
