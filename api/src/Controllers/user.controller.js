@@ -44,7 +44,7 @@ userController.delete("/:id", async(req,res)=>{
   const {id} = req.params
   await userService.delete(id).then((response)=>{
     res
-    .status(200)
+    .status(204)
     .json(response)
   }).catch(e=>{
     res
